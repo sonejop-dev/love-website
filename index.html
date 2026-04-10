@@ -22,6 +22,8 @@ button {
   font-size: 20px;
   padding: 12px 25px;
   cursor: pointer;
+  z-index: 10;
+  position: relative;
 }
 
 #yesBtn {
@@ -30,6 +32,20 @@ button {
 
 #noBtn {
   position: absolute;
+}
+
+/* falling items */
+.fall {
+  position: fixed;
+  top: -50px;
+  font-size: 24px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
 }
 </style>
 </head>
@@ -45,6 +61,7 @@ function yes() {
   alert("Yayyyy 💕 You’re mine now 😝");
 }
 
+// ปุ่ม No วิ่งหนี
 function moveButton() {
   const button = document.getElementById("noBtn");
 
@@ -54,6 +71,27 @@ function moveButton() {
   button.style.left = x + "px";
   button.style.top = y + "px";
 }
+
+// สร้างของตก (หัวใจ + ชิบะ)
+function createFallingItem() {
+  const item = document.createElement("div");
+  item.classList.add("fall");
+
+  const things = ["💖", "💕", "💘", "🐕", "🐕‍🦺"];
+  item.innerHTML = things[Math.floor(Math.random() * things.length)];
+
+  item.style.left = Math.random() * 100 + "vw";
+  item.style.animationDuration = (2 + Math.random() * 3) + "s";
+
+  document.body.appendChild(item);
+
+  setTimeout(() => {
+    item.remove();
+  }, 5000);
+}
+
+// ปล่อยของตกเรื่อยๆ
+setInterval(createFallingItem, 300);
 </script>
 </body>
 </html>
